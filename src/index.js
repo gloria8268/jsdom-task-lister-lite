@@ -1,8 +1,8 @@
 const createEl = document.querySelector('input[type="submit"]')
-const inputValue = document.querySelector('input[type="text"]')
+const inputBarEl = document.querySelector('input[type="text"]')
 const ulEl = document.querySelector('#tasks')
 
-class task {
+class Task {
   constructor(taskContext) {
     //Create the item li
     this.createLi(taskContext)
@@ -18,13 +18,26 @@ class task {
     inputEl.disabled = true;
     inputEl.classList.add('desc')
 
-    let selectEl = document.createElement('select')    
-    selectEl.classList.add('.mark')
-    selectEl.appendChild(document.createElement('option')).innerHTML = 'Priority'
-    selectEl.appendChild(document.createElement('option')).innerHTML = 'High'
-    selectEl.appendChild(document.createElement('option')).innerHTML = 'Medium'
-    selectEl.appendChild(document.createElement('option')).innerHTML = 'Low'
+    let selectEl = document.createElement('select')
+    selectEl.classList.add('mark')
+    selectEl.appendChild(document.createElement('option')).innerHTML = 'priotity'
 
+    let option1El = document.createElement('option')
+    option1El.className='high'
+    option1El.innerHTML = 'High'
+    selectEl.appendChild(option1El)
+
+    let option2El = document.createElement('option')
+    option2El.className='medium'
+    option2El.innerHTML = 'Medium'
+    selectEl.appendChild(option2El)
+
+
+    let option3El = document.createElement('option')
+    option3El.className='low'
+    option3El.innerHTML = 'Low'
+    selectEl.appendChild(option3El)    
+   
     let editEl = document.createElement('button')
     editEl.innerHTML = 'EDIT'
     editEl.classList.add('.edit')
@@ -40,10 +53,8 @@ class task {
     liEl.appendChild(editEl);
     liEl.appendChild(removeEl);
 
-    editEl.addEventListener('click', ()=>this.edit(inputEl))
-    removeEl.addEventListener('click', ()=>this.remove(liEl))
-  
-
+    editEl.addEventListener('click', () => this.edit(inputEl))
+    removeEl.addEventListener('click', () => this.remove(liEl))
   }
 
   edit(inputEl) {
@@ -55,22 +66,21 @@ class task {
   }
 }
 
-function check () {
-//   if (inputValue.value != ""){
-//     new task (inputValue.value);
-//     // inputValue.value=""
-//   }
-new task ('a')
-alert('ok')
+function check(event) {
+  event.preventDefault();
+  if (inputBarEl.value != "") {
+    new Task(inputBarEl.value)
+  }
 }
 
-createEl.addEventListener('click',check)
+createEl.addEventListener('click', check);
+
+// A priority value selected from a dropdown that is used to determine the color of the text in the list (e.g. red for high priority, yellow for medium, green for low)
+
+let priorityEls = document.querySelectorAll('.mark')
+let optionEls = document.querySelectorAll('.mark')
 
 
-
-
-new task ('b')
-// new task ('c')
-
-
-
+// As a challenge, implement a sorting functionality that displays the tasks ascending or descending order based on priority
+// An additional input field (e.g. user, duration, date due)
+// Ability to edit tasks
